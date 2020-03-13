@@ -1,6 +1,7 @@
 #!/bin/bash
 
 tmpdir="/tmp"
+force_email_flag=$1
 
 checkInternet() {
     ping -c1 -W3 -q 8.8.8.8 &> /dev/null && {
@@ -12,12 +13,11 @@ checkInternet() {
 
 checkSDCard() {
     [[ $(mount | grep /sd) == "" ]] && {
-        echo "0"
-    } || {
         echo "1"
+    } || {
+        echo "0"
     }
 }
-
 
 sendEmail() {
     tar_gz=$1
@@ -91,7 +91,7 @@ generateReport() {
     echo tar
     tar -C $tmpdir -pczhf $tmpdir/$archive_name report
 
-    [[ "$(uci get reporting.@settings[0].send_email)" == "1" ]] && {
+    [[ "$(uci get reporting.@settings[0].send_email)" == "1" ]] || [[ "$force_email_flag" == "force_email" ]] && {
         [[ "$(checkInternet)" == "1" ]] && {
             sendEmail $tmpdir/$archive_name
         } || {
