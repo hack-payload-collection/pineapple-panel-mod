@@ -103,6 +103,8 @@ registerController('EmailConfigurationController', ['$api', '$scope', '$timeout'
     });
 
     $scope.testConfiguration = (function() {
+        $scope.saveConfiguration();
+
         if ($scope.config['from'] === "" || $scope.config['to'] === "" || $scope.config['server'] === "" ||
             $scope.config['port'] === "" || $scope.config['domain'] === "" || $scope.config['username'] === "") {
             $scope.error = "You have not provided a correct configuration. Please check all fields and try again.";

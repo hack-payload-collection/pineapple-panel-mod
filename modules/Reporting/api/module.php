@@ -138,8 +138,7 @@ class Reporting extends SystemModule
 
     private function testReportConfiguration()
     {
-        error_log("Test Report");
-        $this->execBackground('/pineapple/modules/Reporting/files/reporting');
+        $this->execBackground('/pineapple/modules/Reporting/files/reporting force_email');
         $this->response = array("success" => true);
     }
 }
