@@ -471,3 +471,32 @@ registerController("OUILookupController", ['$api', '$scope', '$timeout', '$http'
     };
 
 }]);
+
+registerController("AdvancedWirelessController", ['$api', '$scope', '$timeout', '$interval', function($api, $scope, $timeout, $interval){
+    $scope.wireless = "";
+    $scope.wirelessSaved = false;
+
+    $api.request({
+        module: 'Networking',
+        action: 'getWireless'
+    }, function(response) {
+        if (response.error === undefined) {
+            $scope.wireless = response.wireless;
+        }
+    });
+
+    $scope.saveWireless = (function() {
+        $api.request({
+            module: 'Networking',
+            action: 'saveWireless',
+            wireless: $scope.wireless
+        }, function(response) {
+            if (response.success === true) {
+                $scope.wirelessSaved = true;
+                $timeout(function(){
+                    $scope.wirelessSaved = false;
+                }, 2000);
+            }
+        });
+    });
+}]);

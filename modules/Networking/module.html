@@ -288,11 +288,12 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6" ng-controller="NetworkingMACAddressesController">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">MAC Addresses
-                    <span class="dropdown">
+    <div class="col-md-6">
+        <div ng-controller="NetworkingMACAddressesController">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">MAC Addresses
+                        <span class="dropdown">
                         <button ng-disabled="modifyingMAC" class="btn btn-xs btn-default dropdown-toggle" type="button" id="NetworkingAccessPointsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                         </button>
@@ -300,34 +301,51 @@
                             <li ng-disabled="waiting" ng-click="resetMac()"><a>Restore Default MAC Address</a></li>
                         </ul>
                     </span>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="input-group">
-                            <span class="input-group-addon">Interface</span>
-                            <select ng-disabled="modifyingMAC" class="form-control" ng-model="selectedInterface">
-                                <option ng-repeat="(interface, mac) in interfaces">{{ interface }}</option>
-                            </select>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="input-group">
+                                <span class="input-group-addon">Interface</span>
+                                <select ng-disabled="modifyingMAC" class="form-control" ng-model="selectedInterface">
+                                    <option ng-repeat="(interface, mac) in interfaces">{{ interface }}</option>
+                                </select>
+                            </div>
+                            <br/>
+                            <div class="input-group">
+                                <span class="fixed-addon-width-3 input-group-addon">Current MAC</span>
+                                <input type="text" class="form-control autoselect" ng-model="interfaces[selectedInterface]" disabled>
+                            </div>
+                            <br/>
+                            <div class="input-group">
+                                <span class="fixed-addon-width-3 input-group-addon">New MAC</span>
+                                <input ng-disabled="modifyingMAC" type="text" class="form-control" ng-model="newMac">
+                            </div>
+                            <br/><br/>
+                            <button ng-disabled="modifyingMAC" class="btn btn-default" ng-click="setMac()">Set New MAC</button>
+                            <button ng-disabled="modifyingMAC" class="btn btn-default" ng-click="setRandomMac()">Set Random MAC</button>
+                            <img ng-show="modifyingMAC" src="img/throbber.gif"/>
+                            <br/>
+                            <small class="text-muted">Note: Changing MAC addresses will restart the WiFi.</small>
                         </div>
-                        <br/>
-                        <div class="input-group">
-                            <span class="fixed-addon-width-3 input-group-addon">Current MAC</span>
-                            <input type="text" class="form-control autoselect" ng-model="interfaces[selectedInterface]" disabled>
-                        </div>
-                        <br/>
-                        <div class="input-group">
-                            <span class="fixed-addon-width-3 input-group-addon">New MAC</span>
-                            <input ng-disabled="modifyingMAC" type="text" class="form-control" ng-model="newMac">
-                        </div>
-                        <br/><br/>
-                        <button ng-disabled="modifyingMAC" class="btn btn-default" ng-click="setMac()">Set New MAC</button>
-                        <button ng-disabled="modifyingMAC" class="btn btn-default" ng-click="setRandomMac()">Set Random MAC</button>
-                        <img ng-show="modifyingMAC" src="img/throbber.gif"/>
-                        <br/>
-                        <small class="text-muted">Note: Changing MAC addresses will restart the WiFi.</small>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="AdvancedWirelessController">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Wireless config file
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <textarea class="form-control" rows="8" ng-model="wireless"></textarea>
+                    </p>
+                    <p class="alert well-sm alert-success" ng-show="wirelessSaved">Wireless saved successfully</p>
+                    <button type="submit" class="btn btn-default" ng-click="saveWireless()">Save Wireless</button>
                 </div>
             </div>
         </div>
