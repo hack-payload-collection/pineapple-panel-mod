@@ -18,6 +18,7 @@ class AccessPoint
         uciSet('wireless.@wifi-iface[1].key', $apConfig->managementKey);
         uciSet('wireless.@wifi-iface[1].disabled', $apConfig->disableManagementAP);
         uciSet('wireless.@wifi-iface[1].hidden', $apConfig->hideManagementAP);
+        uciSet('wireless.@wifi-iface[1].encryption', 'psk2+ccmp');
         execBackground('wifi');
         return array("success" => true);
     }
